@@ -1,0 +1,6 @@
+html { font-size: 100%; }
+body { background-image: url('confectionary.png');
+h1,h2,h3,h4 { border-bottom: thin solid black; }
+h1.rectitle { border-style: none; color: #1EAEDB; }
+h1.banner { border-style: none; margin-top: 20px; }
+span.pan { color: #1EAEDB; }

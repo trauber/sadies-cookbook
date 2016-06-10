@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Your page title here :)</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/assets.css">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+
+
+<script src="js/showdown.min.js"></script>
+<script src="js/showdown.min.js.map"></script>
+<script src="js/showdown-table.min.js"></script>
+<script src="js/showdown-table.min.js.map"></script>
+<script src="js/routie.js"></script>
+<script src="recipes.js"></script>
+</head>
+<body>
+
+
+
+
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container">
+    <div class="row">
+     <h1 class="banner"><span class="pan">&#x1f373;</span> Sadie's Cookbook</h1>
+      <div id="intro"></div>
+      <div id="scripted" class="ten columns" style="margin-top: 25%">
+      </div>
+    </div>
+  </div>
+</body>
+
+<script>
+var converter = new showdown.Converter({extensions: ['table']});
+var divout = document.getElementById("scripted");
+
+routie({
+  '': function () {
+    document.title = "Sadie's Cookbook";
+    document.getElementById("intro").innerHTML = "<p>This collection of Sadie Schoss’s recipes helps get tasty, hot meals on the table quickly. Sadie uses medical notations in her recipes and this collection retains those: H<sub>2</sub>O for water; c̄ for with. To provide details when needed she uses parentheses and sometimes even nested parentheses. These too are presented as she uses them on her cards. <strong>&#x24c0;</strong> means the dish is Kosher and <strong>פֶּסַח</strong> means the dish is Kosher for Pesach.";
+    var listcontent = "## The Recipes\n";
+    divout.innerHTML = "";
+    
+    for (i=0;i<recipes.length;i++) {
+      listcontent += "- [" + recipes[i].title + "](#rec/" + i + ") " + recipes[i].kashrut + "\n"; 
+    }
+    
+    html = converter.makeHtml(listcontent);
+    divout.innerHTML += html;
+  },
+  'rec/?:recipe': function (recipe) {
+   document.getElementById("intro").innerHTML = "";
+   document.title = recipes[recipe].title;
+   divout.innerHTML = "";
+   
+   if (recipes[recipe].kashrut == "") {
+     divout.innerHTML += "<h1 class=\"rectitle\">" + recipes[recipe].title + "</h1>";
+   } else {
+     divout.innerHTML += "<h1 class=\"rectitle\">" + recipes[recipe].title + " (" + recipes[recipe].kashrut + ")</h1>";
+   }
+   
+   html = converter.makeHtml(recipes[recipe].markdown);
+   divout.innerHTML += html;
+   
+  }
+});
+
+</script>
+</html>
+
